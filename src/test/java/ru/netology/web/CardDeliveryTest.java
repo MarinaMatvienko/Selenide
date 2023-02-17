@@ -25,7 +25,7 @@ public class CardDeliveryTest {
         $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id=date] input").sendKeys(formatter.format(newDate));
         $("[data-test-id=name] input").setValue("Яна Машкова");
-        $("[data-test-id=phone] input").setValue("181102009");
+        $("[data-test-id=phone] input").setValue("+79181102009");
         $("[class=checkbox__box]").click();
         $("[class=button__text]").click();
         $(Selectors.withText("Успешно!")).shouldBe(Condition.appear, Duration.ofSeconds(15));
