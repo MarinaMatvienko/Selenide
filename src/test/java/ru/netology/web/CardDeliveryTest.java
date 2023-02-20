@@ -14,22 +14,25 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class CardDeliveryTest {
 
-    LocalDate date = LocalDate.now();
-    LocalDate newDate = date.plusDays(3);
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    String generateDate(int days) {
+        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
+
+    String planningDate = generateDate(3);
+
 
     @Test
     void shouldSubmitForm() {
         open("http://localhost:9999");
         $("[data-test-id=city] input").setValue("Краснодар");
         $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=date] input").sendKeys(formatter.format(newDate));
+        $("[data-test-id=date] input").setValue(planningDate);
         $("[data-test-id=name] input").setValue("Яна Машкова");
         $("[data-test-id=phone] input").setValue("+79181102009");
         $("[class=checkbox__box]").click();
         $("[class=button__text]").click();
         $(Selectors.withText("Успешно!")).shouldBe(Condition.appear, Duration.ofSeconds(15));
-        $("[data-test-id='notification'] .notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + formatter.format(newDate)));
+        $("[data-test-id='notification'] .notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate));
     }
 
     @Test
@@ -37,7 +40,7 @@ public class CardDeliveryTest {
         open("http://localhost:9999");
         $("[data-test-id=city] input").setValue("Огонь");
         $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=date] input").sendKeys(formatter.format(newDate));
+        $("[data-test-id=date] input").setValue(planningDate);
         $("[data-test-id=name] input").setValue("Яна Машкова");
         $("[data-test-id=phone] input").setValue("+79181102009");
         $("[class=checkbox__box]").click();
@@ -50,7 +53,7 @@ public class CardDeliveryTest {
         open("http://localhost:9999");
         $("[data-test-id=city] input").setValue("Москва");
         $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=date] input").sendKeys(formatter.format(newDate));
+        $("[data-test-id=date] input").setValue(planningDate);
         $("[data-test-id=name] input").setValue("Yana Senova");
         $("[data-test-id=phone] input").setValue("+79181102009");
         $("[class=checkbox__box]").click();
@@ -63,13 +66,13 @@ public class CardDeliveryTest {
         open("http://localhost:9999");
         $("[data-test-id=city] input").setValue("Москва");
         $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=date] input").sendKeys(formatter.format(newDate));
+        $("[data-test-id=date] input").setValue(planningDate);
         $("[data-test-id=name] input").setValue("Анна-Мария Воронцова");
         $("[data-test-id=phone] input").setValue("+79181102009");
         $("[class=checkbox__box]").click();
         $("[class=button__text]").click();
         $(Selectors.withText("Успешно!")).shouldBe(Condition.appear, Duration.ofSeconds(15));
-        $("[data-test-id='notification'] .notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + formatter.format(newDate)));
+        $("[data-test-id='notification'] .notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate));
     }
 
     @Test
@@ -77,7 +80,7 @@ public class CardDeliveryTest {
         open("http://localhost:9999");
         $("[data-test-id=city] input").setValue("Москва");
         $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=date] input").sendKeys(formatter.format(newDate));
+        $("[data-test-id=date] input").setValue(planningDate);
         $("[data-test-id=name] input").setValue("Анна Воронцова");
         $("[data-test-id=phone] input").setValue("89181102009");
         $("[class=checkbox__box]").click();
@@ -103,7 +106,7 @@ public class CardDeliveryTest {
         open("http://localhost:9999");
         $("[data-test-id=city] input").setValue("Москва");
         $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=date] input").sendKeys(formatter.format(newDate));
+        $("[data-test-id=date] input").setValue(planningDate);
         $("[data-test-id=name] input").setValue("");
         $("[data-test-id=phone] input").setValue("+79181102009");
         $("[class=checkbox__box]").click();
@@ -116,7 +119,7 @@ public class CardDeliveryTest {
         open("http://localhost:9999");
         $("[data-test-id=city] input").setValue("Москва");
         $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=date] input").sendKeys(formatter.format(newDate));
+        $("[data-test-id=date] input").setValue(planningDate);
         $("[data-test-id=name] input").setValue("Яна Машкова");
         $("[data-test-id=phone] input").setValue("");
         $("[class=checkbox__box]").click();
@@ -130,11 +133,10 @@ public class CardDeliveryTest {
         open("http://localhost:9999");
         $("[data-test-id=city] input").setValue("Москва");
         $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=date] input").sendKeys(formatter.format(newDate));
+        $("[data-test-id=date] input").setValue(planningDate);
         $("[data-test-id=name] input").setValue("Оксимирон Окси");
         $("[data-test-id=phone] input").setValue("+79181102009");
         $("[class=button__text]").click();
         $("[class=checkbox__text]").shouldBe(Condition.text("Я соглашаюсь с условиями обработки и использования моих персональных данных"));
     }
 }
-
